@@ -1,11 +1,12 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <h1>
       TEST : Saurez-vous reconnaître ces pays par leur drapeau ?
     </h1>
-    <card v-for="(item, index) in flags" :key="index" :flag="item"></card>
-
-    <div class="card">
+    <div class="alert alert-info text-center">
+      Votre score est : {{ score }} / {{ flags.length }}
+    </div>
+    <div class="card my-5">
       <img
         :src="`https://flagcdn.com/w640/${flags[index].flag}.png`"
         class="card-img-top"
@@ -15,6 +16,7 @@
         <li
           v-for="(item, index) in flags[index].answers"
           :key="index"
+          @click="handleClick(index)"
           class="list-group-item"
         >
           {{ item }}
@@ -29,12 +31,22 @@ import flags from "./flags";
 export default {
   name: "App",
   components: {},
-  methods: {},
   data() {
     return {
       flags: flags,
-      index: 3,
+      index: 0,
+      score: 0,
     };
+  },
+  methods: {
+    handleClick(index) {
+      if (index === this.flags[this.index].ok) {
+        this.score++;
+        this.index++;
+      } else {
+        this.index++;
+      }
+    },
   },
 };
 </script>
@@ -49,7 +61,7 @@ export default {
   margin-top: 60px;
 }
 .card {
-  width: 50%;
+  width: 45%;
   margin: 0 auto;
 }
 .list-group-item {
@@ -57,6 +69,6 @@ export default {
   font-size: 18px;
 }
 .list-group-item:hover {
-  background: rgb(148, 205, 230);
+  background: rgb(184, 222, 238);
 }
 </style>
