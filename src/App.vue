@@ -12,16 +12,30 @@
         class="card-img-top"
         :alt="`Drapeau du ${flags[index].country} `"
       />
-      <ul class="list-group">
-        <li
-          v-for="(item, index) in flags[index].answers"
-          :key="index"
-          @click="handleClick(index)"
-          class="list-group-item"
+      <div class="card-body">
+        <ul class="list-group">
+          <li
+            v-for="(item, index) in flags[index].answers"
+            :key="index"
+            @click="handleClick(index)"
+            class="list-group-item  list-group-item-action"
+            :class="{
+              'list-group-item-success': verifReponse[index] == 'success',
+              'list-group-item-danger': verifReponse[index] == 'danger',
+            }"
+          >
+            {{ item }}
+          </li>
+        </ul>
+
+        <button
+          v-if="voirReponse"
+          @click="continuer"
+          class="btn btn-secondary mt-2"
         >
-          {{ item }}
-        </li>
-      </ul>
+          Continuer
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -36,16 +50,24 @@ export default {
       flags: flags,
       index: 0,
       score: 0,
+      voirReponse: false,
+      verifReponse: [],
     };
   },
   methods: {
     handleClick(index) {
+      this.voirReponse = true;
       if (index === this.flags[this.index].ok) {
         this.score++;
-        this.index++;
       } else {
-        this.index++;
+        this.verifReponse[index] = "danger";
       }
+      this.verifReponse[this.flags[this.index].ok] = "success";
+    },
+    continuer() {
+      this.voirReponse = false;
+      this.index++;
+      this.verifReponse = [];
     },
   },
 };
@@ -68,7 +90,5 @@ export default {
   cursor: pointer;
   font-size: 18px;
 }
-.list-group-item:hover {
-  background: rgb(184, 222, 238);
-}
+
 </style>
