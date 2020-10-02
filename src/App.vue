@@ -1,12 +1,16 @@
 <template>
   <div id="app" class="container">
-    <h1>
+    <h1 class="mt-2">
       TEST : Saurez-vous reconnaître ces pays par leur drapeau ?
     </h1>
-    <div class="alert alert-info text-center">
-      Votre score est : {{ score }} / {{ flags.length }}
+    <div class="row d-flex justify-content-center">
+      <div class="col-6">
+        <div class="mt-2 alert alert-light text-center">
+          Votre score est : {{ score }} / {{ flags.length }}
+        </div>
+      </div>
     </div>
-    <div class="card my-5">
+    <div class="card my-2">
       <img
         :src="`https://flagcdn.com/w640/${flags[index].flag}.png`"
         class="card-img-top"
@@ -34,6 +38,9 @@
           class="btn btn-secondary mt-2"
         >
           Continuer
+        </button>
+        <button v-if="fin" @click="recommencer" class="btn btn-secondary mt-2">
+          recommencer
         </button>
 
         <div id="myModal" class="modal" tabindex="-1" role="dialog">
@@ -129,17 +136,32 @@ export default {
 </script>
 
 <style>
+body {
+  background: #ff7e5f; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #feb47b,
+    #ff7e5f
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #feb47b,
+    #ff7e5f
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: graƒyscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 .card {
   max-width: 500px;
   margin: 0 auto;
+}
+.card img {
+  height: 250px;
 }
 .list-group-item {
   cursor: pointer;
